@@ -34,15 +34,15 @@ class Sortie
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etat $Etat = null;
+    private ?Etat $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Sortie')]
+    #[ORM\ManyToOne(inversedBy: 'sortie')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Site $Site = null;
+    private ?Site $site = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, inversedBy: 'sorties')]
     private Collection $participants;
@@ -135,12 +135,12 @@ class Sortie
 
     public function getEtat(): ?Etat
     {
-        return $this->Etat;
+        return $this->etat;
     }
 
-    public function setEtat(?Etat $Etat): self
+    public function setEtat(?Etat $etat): self
     {
-        $this->Etat = $Etat;
+        $this->etat = $etat;
 
         return $this;
     }
@@ -159,12 +159,12 @@ class Sortie
 
     public function getSite(): ?Site
     {
-        return $this->Site;
+        return $this->site;
     }
 
-    public function setSite(?Site $Site): self
+    public function setSite(?Site $site): self
     {
-        $this->Site = $Site;
+        $this->site = $site;
 
         return $this;
     }

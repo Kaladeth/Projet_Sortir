@@ -18,16 +18,16 @@ class Site
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'Site', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'site', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     #[ORM\OneToMany(mappedBy: 'site', targetEntity: Participant::class)]
-    private Collection $Participant;
+    private Collection $participants;
 
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
-        $this->Participant = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,22 +55,22 @@ class Site
         return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): self
+    public function addSortie(Sortie $sortie): self
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
-            $sorty->setSite($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setSite($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): self
+    public function removeSortie(Sortie $sortie): self
     {
-        if ($this->sorties->removeElement($sorty)) {
+        if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getSite() === $this) {
-                $sorty->setSite(null);
+            if ($sortie->getSite() === $this) {
+                $sortie->setSite(null);
             }
         }
 
@@ -80,15 +80,15 @@ class Site
     /**
      * @return Collection<int, Participant>
      */
-    public function getParticipant(): Collection
+    public function getParticipants(): Collection
     {
-        return $this->Participant;
+        return $this->participants;
     }
 
     public function addParticipant(Participant $participant): self
     {
-        if (!$this->Participant->contains($participant)) {
-            $this->Participant->add($participant);
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
             $participant->setSite($this);
         }
 
@@ -97,7 +97,7 @@ class Site
 
     public function removeParticipant(Participant $participant): self
     {
-        if ($this->Participant->removeElement($participant)) {
+        if ($this->participants->removeElement($participant)) {
             // set the owning side to null (unless already changed)
             if ($participant->getSite() === $this) {
                 $participant->setSite(null);

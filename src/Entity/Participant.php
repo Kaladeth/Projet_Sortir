@@ -36,7 +36,7 @@ class Participant
     #[ORM\Column(length: 255)]
     private ?string $mdp = null;
 
-    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscrits')]
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
     private Collection $sorties;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
@@ -48,7 +48,7 @@ class Participant
         $this->sortiesOrganisees = new ArrayCollection();
     }
 
-    #[ORM\ManyToOne(inversedBy: 'Participant')]
+    #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $site = null;
 
@@ -161,20 +161,20 @@ class Participant
         return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): self
+    public function addSortie(Sortie $sortie): self
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
-            $sorty->addInscrit($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->addParticipant($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): self
+    public function removeSortie(Sortie $sortie): self
     {
-        if ($this->sorties->removeElement($sorty)) {
-            $sorty->removeInscrit($this);
+        if ($this->sorties->removeElement($sortie)) {
+            $sortie->removeParticipant($this);
         }
 
         return $this;
